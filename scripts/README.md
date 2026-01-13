@@ -1,4 +1,4 @@
-# UHI-LST Platform Scripts
+# 📜 UHI-LST Platform Scripts
 
 This folder contains scripts to manage the UHI-LST platform.
 

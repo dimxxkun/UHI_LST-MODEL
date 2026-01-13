@@ -1,4 +1,4 @@
-# UHI-LST Analysis Backend
+# ⚙️ UHI-LST Analysis Backend
 
 FastAPI backend for processing Landsat 8/9 imagery to calculate Land Surface Temperature (LST) and Urban Heat Island (UHI) indices.
 

@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# 🖥️ UHI-LST Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The interactive user interface for the Urban Heat Island and Land Surface Temperature analysis platform.
 
-Currently, two official plugins are available:
+## 🚀 Built With
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: [React 18](https://reactjs.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Mapping**: [Leaflet](https://leafletjs.com/) + [React Leaflet](https://react-leaflet.js.org/)
+- **Raster Processing**: [GeoTIFF.js](https://geotiffjs.github.io/) + [Plotty](https://github.com/santilland/plotty)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🏗️ Project Structure
 
-## Expanding the ESLint configuration
+- `src/components/map/`: Custom mapping layers and Leaflet integrations.
+  - `TiffLayer.tsx`: Grayscale thermal band rendering.
+  - `CompositeTiffLayer.tsx`: Multi-band (RGB) true color composite rendering.
+  - `HeatmapLayer.tsx`: Dynamic visualization of analysis results.
+- `src/pages/`: Main application views.
+  - `Analysis.tsx`: Data ingestion and processing workspace.
+  - `Dashboard.tsx`: Comprehensive results visualization and AI insights.
+- `src/stores/`: Global state management for analysis results.
+- `src/services/api.ts`: FastAPI backend integration layer.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Setup
+Ensure you have [Node.js](https://nodejs.org/) installed.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Production Build
+```bash
+# Build for production
+npm run build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Preview build locally
+npm run preview
 ```
+
+---
+
+## 📐 Design Principles
+
+- **Performance First**: Large raster files are downsampled and processed in-memory for zero-latency map interactions.
+- **Glassmorphic UI**: Uses modern translucent layers and subtle gradients for a premium feel.
+- **Responsive Layout**: Designed to work on various screen sizes from iPad Pro to Desktop.
+- **Real-time Feedback**: Detailed progress bars and live timers for backend processing tasks.
+
+---
+
+## 📝 Type Safety
+
+The project uses a strict TypeScript configuration to ensure data integrity between the FastAPI backend and the React frontend. See `src/types/api.ts` for the shared data models.
