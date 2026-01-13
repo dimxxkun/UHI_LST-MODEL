@@ -1,0 +1,63 @@
+# ============================================
+# UHI-LST Analysis Docker Compose Configuration
+# ============================================
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: uhi-lst-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=false
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+      - MAX_FILE_SIZE_MB=500
+      - LOG_LEVEL=INFO
+    volumes:
+      # Mount for development (optional - remove in production)
+      # - .:/app
+      # Persistent storage for temp files (optional)
+      - uhi_temp_data:/tmp/uhi_lst
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+  # Optional: Frontend (uncomment if building frontend too)
+  # frontend:
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: Dockerfile
+  #   container_name: uhi-lst-frontend
+  #   ports:
+  #     - "5173:5173"
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     - VITE_API_URL=http://localhost:8000
+
+  # Optional: Redis cache for future job tracking
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: uhi-lst-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+
+volumes:
+  uhi_temp_data:
+    # redis_data:
+
+networks:
+  default:
+    name: uhi-lst-network

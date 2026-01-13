@@ -60,28 +60,15 @@ export const TiffLayer: React.FC<TiffLayerProps> = ({ file, opacity = 0.7 }) => 
 
                 // Read with downsampling
                 let rasters;
-                try {
-                    if (targetWidth < width || targetHeight < height) {
-                        rasters = await image.readRasters({
-                            window: [0, 0, width, height],
-                            width: targetWidth,
-                            height: targetHeight,
-                            samples: [0],
-                            pool: true
-                        });
-                    } else {
-                        rasters = await image.readRasters({ samples: [0], pool: true });
-                    }
-                } catch (readError) {
-                    console.warn('Retrying with basic read...', readError);
-                    targetWidth = Math.min(targetWidth, 1024);
-                    targetHeight = Math.min(targetHeight, 1024);
+                if (targetWidth < width || targetHeight < height) {
                     rasters = await image.readRasters({
                         window: [0, 0, width, height],
                         width: targetWidth,
                         height: targetHeight,
                         samples: [0]
                     });
+                } else {
+                    rasters = await image.readRasters({ samples: [0] });
                 }
 
                 const data = rasters[0] as unknown as Float32Array;
@@ -101,7 +88,7 @@ export const TiffLayer: React.FC<TiffLayerProps> = ({ file, opacity = 0.7 }) => 
                 let validCount = 0;
 
                 for (let i = 0; i < data.length; i++) {
-                    if (!isNaN(data[i]) && isFinite(data[i]) && data[i] !== -9999) {
+                    if (!isNaN(data[i]) && isFinite(data[i]) && data[i] !== -9999 && data[i] !== 0) {
                         if (data[i] < min) min = data[i];
                         if (data[i] > max) max = data[i];
                         validCount++;
@@ -147,8 +134,8 @@ export const TiffLayer: React.FC<TiffLayerProps> = ({ file, opacity = 0.7 }) => 
                 const pixels = imageData.data;
 
                 for (let i = 0; i < data.length; i++) {
-                    // Set alpha to 0 for NoData values (-9999 or NaN/Infinite)
-                    if (data[i] === -9999 || !isFinite(data[i])) {
+                    // Set alpha to 0 for NoData values (-9999, 0, or NaN/Infinite)
+                    if (data[i] === -9999 || data[i] === 0 || !isFinite(data[i])) {
                         const pixelIndex = i * 4;
                         pixels[pixelIndex + 3] = 0; // Set alpha channel to transparent
                     }

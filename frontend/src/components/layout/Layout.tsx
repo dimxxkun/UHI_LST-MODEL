@@ -15,7 +15,7 @@ export const Layout: React.FC = () => {
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 <Header toggleSidebar={toggleSidebar} />
 
-                <main className="flex-1 overflow-auto p-4 lg:p-8">
+                <main className="flex-1 overflow-auto scrollbar-hidden p-3 sm:p-4 lg:p-6 xl:p-8">
                     <div className="max-w-7xl mx-auto">
                         <Outlet />
                     </div>

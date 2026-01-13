@@ -24,3 +24,21 @@ yarn-error.log*
 
 # Artifacts/Gemini
 .gemini/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+*.egg-info/
+.eggs/
+
+# Backend temp files
+*.tif.tmp
+uploads/
+temp/

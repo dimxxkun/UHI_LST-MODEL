@@ -7,14 +7,75 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Better touch targets for mobile */
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Safe areas for notched phones */
+  @supports (padding: env(safe-area-inset-bottom)) {
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition-colors font-medium;
+    @apply px-4 py-2.5 sm:py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 active:bg-primary-800 transition-colors font-medium text-sm sm:text-base touch-manipulation;
   }
 
   .card {
-    @apply bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-4;
+    @apply bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 p-3 sm:p-4;
+  }
+
+  /* Responsive scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.slate.400') transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.slate.400');
+    border-radius: 3px;
+  }
+
+  /* Hidden scrollbar - only shows on hover */
+  .scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hidden:hover {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.slate.500') transparent;
+  }
+
+  .scrollbar-hidden:hover::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+
+  .scrollbar-hidden:hover::-webkit-scrollbar-thumb {
+    background-color: theme('colors.slate.500');
+    border-radius: 2px;
+  }
+
+  .scrollbar-hidden:hover::-webkit-scrollbar-track {
+    background: transparent;
   }
 }
