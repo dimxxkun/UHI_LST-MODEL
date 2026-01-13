@@ -18,7 +18,11 @@ export const AnalysisPage = () => {
     });
 
     // Use global store for analysis state
-    const { analysisResult, isLoading, error, setAnalysisResult, setLoading, setError } = useAnalysisStore();
+    const {
+        analysisResult, isLoading, error,
+        setAnalysisResult, setLoading, setError,
+        saveCurrentAnalysis
+    } = useAnalysisStore();
     const [uploadProgress, setUploadProgress] = useState(0);
     const [mapViewMode, setMapViewMode] = useState<'thermal' | 'truecolor'>('thermal');
     const [opacity, setOpacity] = useState(0.8);
@@ -57,6 +61,12 @@ export const AnalysisPage = () => {
             );
 
             setAnalysisResult(result);
+
+            // Auto-save the project with a descriptive name
+            const timestamp = new Date().toLocaleString([], {
+                month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+            saveCurrentAnalysis(`Analysis - ${timestamp}`);
         } catch (err: unknown) {
             const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred during analysis';
             console.error('Analysis failed:', err);
@@ -172,8 +182,8 @@ export const AnalysisPage = () => {
                                     setOpacity(0.8);
                                 }}
                                 className={`px-3 py-2 flex items-center gap-2 text-xs font-medium transition-colors ${mapViewMode === 'thermal'
-                                        ? 'bg-indigo-600 text-white'
-                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+                                    ? 'bg-indigo-600 text-white'
+                                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                                     }`}
                             >
                                 <Thermometer className="w-3.5 h-3.5" />
@@ -187,8 +197,8 @@ export const AnalysisPage = () => {
                                 disabled={!bandFiles.B4 || !bandFiles.B3 || !bandFiles.B2}
                                 title={(!bandFiles.B4 || !bandFiles.B3 || !bandFiles.B2) ? "Upload Bands 4, 3, and 2 to enable True Color" : ""}
                                 className={`px-3 py-2 flex items-center gap-2 text-xs font-medium transition-colors ${mapViewMode === 'truecolor'
-                                        ? 'bg-indigo-600 text-white'
-                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed'
+                                    ? 'bg-indigo-600 text-white'
+                                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed'
                                     }`}
                             >
                                 <Eye className="w-3.5 h-3.5" />

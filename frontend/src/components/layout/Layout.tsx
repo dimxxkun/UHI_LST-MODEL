@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { Toast } from '../common/Toast';
 
 export const Layout: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -21,6 +22,8 @@ export const Layout: React.FC = () => {
                     </div>
                 </main>
             </div>
+
+            <Toast />
         </div>
     );
 };

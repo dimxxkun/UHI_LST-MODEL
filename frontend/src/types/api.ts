@@ -127,3 +127,11 @@ export interface AnalysisError {
     job_id?: string;
     hint?: string;
 }
+
+export interface Project {
+    id: string;
+    name: string;
+    description?: string;
+    timestamp: number;
+    result: AnalysisResult;
+}

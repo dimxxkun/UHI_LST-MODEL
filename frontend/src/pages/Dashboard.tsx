@@ -145,13 +145,22 @@ export const Dashboard = () => {
                     <p className="text-slate-500 dark:text-slate-400 mb-6 max-w-md">
                         Upload Landsat band files and run an analysis to see UHI and LST results here.
                     </p>
-                    <button
-                        onClick={() => navigate('/analysis')}
-                        className="btn-primary flex items-center gap-2"
-                    >
-                        Go to Analysis
-                        <ArrowRight className="w-4 h-4" />
-                    </button>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                        <button
+                            onClick={() => navigate('/analysis')}
+                            className="btn-primary flex items-center gap-2"
+                        >
+                            Go to Analysis
+                            <ArrowRight className="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick={() => navigate('/projects')}
+                            className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-md hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors font-medium text-sm flex items-center justify-center gap-2"
+                        >
+                            <Clock className="w-4 h-4" />
+                            View Past Projects
+                        </button>
+                    </div>
                 </div>
             </div>
         );
